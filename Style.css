@@ -1,0 +1,352 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  background-color: black; /* Чорний фон довкола */
+  overflow: hidden;
+  position: relative;
+}
+
+/* ФОНОВЕ ЗОБРАЖЕННЯ */
+.background {
+  position: fixed;
+  top: -95vh; /* Піднято ще вище */
+  left: 0;
+  width: 100%;
+  height: 260vh; /* Збільшена висота */
+  background: url('images/of3-6867d9e1a6806346107291.avif') no-repeat center top/contain;
+  z-index: 1;
+}
+
+
+.background::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.95) 0%,    /* сильне зверху */
+    rgba(0, 0, 0, 0.8) 30%,
+    rgba(0, 0, 0, 0.6) 60%,
+    rgba(0, 0, 0, 0.2) 80%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  pointer-events: none;
+}
+
+/* КОНТЕЙНЕР */
+.container {
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  padding-top: 100px;
+}
+
+/* ЛОГОТИП */
+header {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.logo {
+  width: 130px;
+}
+
+/* ЗАГОЛОВОК */
+h1 {
+  font-size: 3em;
+  margin-bottom: 15px;
+  text-shadow: 0 0 8px rgba(0,0,0,0.7);
+}
+
+/* СТАТУС */
+.status {
+  color: lightgreen;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-shadow: 0 0 5px rgba(0,0,0,0.7);
+}
+
+/* ОПИС */
+.desc {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  text-shadow: 0 0 5px rgba(0,0,0,0.7);
+}
+
+/* КНОПКА */
+.cta-button {
+  display: inline-block;
+  background-color: #229ED9;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.3s ease;
+  margin-bottom: 40px;
+  box-shadow: 0 0 10px #229ED9aa;
+}
+
+.cta-button i {
+  margin-right: 10px;
+}
+
+.cta-button:hover {
+  background-color: #178BBE;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #178BBEcc;
+}
+
+/* ЛІЧИЛЬНИК */
+.countdown {
+  font-size: 1.3em;
+  text-shadow: 0 0 5px rgba(0,0,0,0.7);
+}
+
+#timer {
+  font-size: 2.2em;
+  margin-top: 8px;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(0,0,0,0.7);
+}
+
+.timer {
+  display: inline-flex;
+  gap: 4px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.time-box {
+  background: #222;             /* темно-сірий фон */
+  border: 1.5px solid #888;    /* світло-сіра обводка */
+  border-radius: 4px;
+  padding: 4px 7px;
+  color: #bbb;                 /* світло-сірий текст */
+  font-size: 1em;              /* маленький шрифт */
+  font-weight: 600;
+  box-shadow:
+    0 0 4px rgba(170, 170, 170, 0.4),
+    inset 0 0 6px rgba(150, 150, 150, 0.6);
+  user-select: none;
+  min-width: 20px;
+  text-align: center;
+}
+
+.time-sep {
+  color: #888;
+  font-size: 1em;
+  font-weight: 600;
+  user-select: none;
+  padding-top: 3px;
+}
+
+
+
+/* ФУТЕР */
+footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9em;
+  color: #ccc;
+  z-index: 1;
+}
+
+footer a {
+  color: #ccc;
+  text-decoration: underline;
+}
+footer a:hover {
+  color: white;
+}
+
+/* АПЕАРАНС */
+main {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+main.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+
+  .status {
+    font-size: 1em;
+    margin-bottom: 8px;
+  }
+
+  .desc {
+    font-size: 1em;
+    margin-bottom: 15px;
+    padding: 0 10px;
+  }
+
+  .cta-button {
+    font-size: 16px;
+    padding: 12px 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 8px #229ED9aa;
+    width: 60%;
+    max-width: 320px;
+  }
+
+  .countdown {
+    font-size: 1.1em;
+  }
+
+  #timer {
+    font-size: 1.8em;
+    margin-top: 6px;
+  }
+
+  .container {
+    padding-top: 80px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  header {
+    top: 5px;
+  }
+
+  .logo {
+    width: 110px;
+  }
+   .background {
+    top: -30vh;       /* Підняти трохи менше, ніж на десктопі */
+    height: 120vh;    /* Зменшити висоту фону */
+    background-size: cover; /* Щоб фон повністю покривав екран */
+    background-position: center center; /* Центрувати фон по вертикалі і горизонталі */
+  }
+}
+@media (max-width: 480px) {
+  .background {
+    top: -40vh;
+    height: 120vh;
+    background-size: cover;
+    background-position: center center;
+  }
+  h1 {
+    font-size: 1.6em;  /* зменшено */
+    margin-bottom: 8px;
+  }
+  .status {
+    font-size: 0.9em;  /* зменшено */
+    margin-bottom: 6px;
+  }
+  .desc {
+    font-size: 0.9em;  /* зменшено */
+    margin-bottom: 12px;
+    padding: 0 10px;
+  }
+  .cta-button {
+    font-size: 14px;   /* зменшено */
+    padding: 10px 18px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 6px #229ED9aa;
+    width: 60%;
+    max-width: 320px;
+  }
+  .countdown {
+    font-size: 1em;    /* зменшено */
+  }
+  #timer {
+    font-size: 1.5em;  /* зменшено */
+    margin-top: 5px;
+  }
+  .container {
+    padding-top: 70px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  header {
+    top: 5px;
+  }
+  .logo {
+    width: 100px;      /* трохи менше */
+  }
+}
+/* Для екранів до 650px */
+@media (max-width: 650px) {
+  .background {
+    top: -45vh;
+    height: 130vh;
+    background-size: cover;
+    background-position: center center;
+  }
+  h1 {
+    font-size: 2em;  /* менше за десктоп, більше за мобільний */
+    margin-bottom: 10px;
+  }
+  .status {
+    font-size: 1em;
+    margin-bottom: 8px;
+  }
+  .desc {
+    font-size: 1em;
+    margin-bottom: 15px;
+    padding: 0 15px;
+  }
+  .cta-button {
+    font-size: 16px;
+    padding: 13px 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 8px #229ED9aa;
+    width: 60%;
+    max-width: 350px;
+  }
+  .countdown {
+    font-size: 1.15em;
+  }
+  #timer {
+    font-size: 1.8em;
+    margin-top: 6px;
+  }
+  .container {
+    padding-top: 80px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  header {
+    top: 7px;
+  }
+  .logo {
+    width: 115px;
+  }
+}
+@media (max-width: 480px) {
+  .time-box {
+    font-size: 0.7em;
+    padding: 3px 5px;
+    min-width: 14px;
+  }
+
+  .time-sep {
+    font-size: 0.7em;
+    padding-top: 2px;
+  }
+}
