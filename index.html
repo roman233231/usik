@@ -2,51 +2,586 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>УСИК - ДЮБУА</title>
-  <link rel="stylesheet" href="Style.css" />
-  <link rel="icon" href="images/frame-5-6867d9e17e478840814590.avif" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>УСИК — ВЕРХОВЕН | Пряма трансляція</title>
+   <link rel="icon" href="завантаження.png" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Arial', 'Helvetica', sans-serif;
+      color: white;
+      background-color: black;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ФОНОВЕ ЗОБРАЖЕННЯ (той самий фон, що й в оригіналі) */
+    .background {
+      position: fixed;
+      top: -95vh;
+      left: 0;
+      width: 100%;
+      height: 350vh;
+      background: url('Gemini_Generated_Image_ehzd74ehzd74ehzd.png') no-repeat center top / contain;
+      z-index: 1;
+    }
+
+    .background::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.8) 30%,
+        rgba(0, 0, 0, 0.6) 60%,
+        rgba(0, 0, 0, 0.2) 80%,
+        rgba(0, 0, 0, 0.3) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* ОСНОВНИЙ КОНТЕЙНЕР */
+    .container {
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      padding-top: 100px;
+    }
+
+    /* ЛОГОТИП */
+    header {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 15;
+    }
+
+    .logo {
+      width:200px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+    }
+
+    /* ГОЛОВНИЙ ЗАГОЛОВОК */
+    h1 {
+      font-size: 3em;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px rgba(0,0,0,0.8);
+      letter-spacing: 1px;
+      font-weight: 800;
+    }
+
+    /* СТАТУС ОНЛАЙН */
+    .status {
+      color: #7efb7e;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-shadow: 0 0 6px rgba(0,0,0,0.7);
+      font-size: 1.2rem;
+      background: rgba(0,0,0,0.4);
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+    }
+
+    .status i {
+      margin-right: 6px;
+    }
+
+    /* ОПИС */
+    .desc {
+      font-size: 1.2em;
+      margin-bottom: 25px;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.4);
+      padding: 8px 20px;
+      border-radius: 60px;
+      display: inline-block;
+      backdrop-filter: blur(2px);
+    }
+
+    /* КНОПКА TELEGRAM */
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: #229ED9;
+      color: white;
+      padding: 15px 32px;
+      border-radius: 60px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.25s ease;
+      margin-bottom: 40px;
+      box-shadow: 0 0 14px #229ED9aa;
+      border: none;
+      letter-spacing: 0.5px;
+    }
+
+    .cta-button i {
+      font-size: 1.3em;
+    }
+
+    .cta-button:hover {
+      background-color: #178BBE;
+      transform: scale(1.03);
+      box-shadow: 0 0 22px #178BBEcc;
+    }
+
+    /* БЛОК ЛІЧИЛЬНИКА ТАЙМЕРА */
+    .countdown {
+      font-size: 1.3rem;
+      text-shadow: 0 0 5px rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.55);
+      padding: 15px 24px;
+      border-radius: 50px;
+      backdrop-filter: blur(4px);
+      width: auto;
+      display: inline-block;
+    }
+
+    .countdown br {
+      display: none;
+    }
+
+    .countdown span {
+      font-weight: bold;
+      color: #ffd966;
+    }
+
+    #timer {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .timer {
+      display: inline-flex;
+      gap: 6px;
+      font-family: 'Courier New', 'Fira Mono', monospace;
+      background: rgba(0,0,0,0.6);
+      padding: 6px 12px;
+      border-radius: 48px;
+    }
+
+    .time-box {
+      background: #1a1a1a;
+      border: 1.5px solid #aaa;
+      border-radius: 10px;
+      padding: 6px 10px;
+      color: #f0f0f0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      box-shadow: 0 0 6px rgba(255,255,200,0.3), inset 0 0 4px rgba(255,255,200,0.2);
+      user-select: none;
+      min-width: 32px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .time-sep {
+      color: #ddd;
+      font-size: 1.4rem;
+      font-weight: 700;
+      user-select: none;
+      padding-top: 3px;
+    }
+
+    /* ФУТЕР */
+    footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #ccc;
+      z-index: 10;
+      background: rgba(0,0,0,0.5);
+      padding: 6px 0;
+      backdrop-filter: blur(4px);
+    }
+
+    footer a {
+      color: #ddd;
+      text-decoration: underline;
+      transition: 0.2s;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    /* Анімація появи головного блоку */
+    main {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.9s ease;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    main.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* АДАПТИВНІСТЬ (як в оригіналі + покращення) */
+    @media (max-width: 650px) {
+      .background {
+        top: -45vh;
+        height: 130vh;
+        background-size: cover;
+        background-position: center center;
+      }
+      h1 {
+        font-size: 2.2em;
+        margin-bottom: 10px;
+      }
+      .status {
+        font-size: 1rem;
+        padding: 3px 12px;
+      }
+      .desc {
+        font-size: 1rem;
+        margin-bottom: 18px;
+        padding: 6px 16px;
+      }
+      .cta-button {
+        font-size: 15px;
+        padding: 12px 24px;
+        margin-bottom: 30px;
+        width: auto;
+        min-width: 230px;
+      }
+      .countdown {
+        font-size: 1.1rem;
+        padding: 12px 20px;
+      }
+      #timer {
+        font-size: 1.6rem;
+      }
+      .time-box {
+        padding: 4px 7px;
+        min-width: 28px;
+        font-size: 1rem;
+      }
+      .time-sep {
+        font-size: 1.2rem;
+      }
+      .container {
+        padding-top: 90px;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      .logo {
+        width: 110px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .background {
+        top: 0vh;
+        height: 95vh;
+        background-size: cover;
+        background-position: 50% 20%;
+      }
+      h1 {
+        font-size: 1.8em;
+        margin-bottom: 8px;
+      }
+      .status {
+        font-size: 0.85rem;
+      }
+      .desc {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+      }
+      .cta-button {
+        font-size: 14px;
+        padding: 10px 18px;
+        margin-bottom: 25px;
+        width: 75%;
+      }
+      .countdown {
+        font-size: 0.95rem;
+        padding: 10px 16px;
+      }
+      #timer {
+        font-size: 1.3rem;
+      }
+      .timer {
+        gap: 3px;
+      }
+      .time-box {
+        padding: 3px 5px;
+        min-width: 22px;
+        font-size: 0.85rem;
+      }
+      .time-sep {
+        font-size: 1rem;
+        padding-top: 2px;
+      }
+      .logo {
+        width: 95px;
+      }
+      .container {
+        padding-top: 75px;
+      }
+    }
+
+    /* Додатковий комфорт */
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      .cta-button {
+        width: 85%;
+        font-size: 13px;
+      }
+      .time-box {
+        padding: 2px 4px;
+        min-width: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="background"></div> 
-  <div class="overlay"></div>    
 
-  <div class="container">
-    <header>
-      <img src="images/frame-5-6867d9e17e478840814590.avif" alt="MEGOGO" class="logo" />
-    </header>
+<div class="background"></div>
+<div class="overlay"></div>
 
-    <main>
-      <h1>УСИК – ДЮБУА</h1>
-      <div class="status">🟢 Зараз онлайн</div>
-      <p class="desc">Безкоштовний набір на трансляцію! <br> Приймаю лише перших 100 людей по посиланню!</p>
+<div class="container">
+  <header>
+    <img src="i75_ArticleImage_237987.webp" alt="MEGOGO" class="logo" />
+  </header>
 
-      <a href="https://t.me/+YXYxPDUhfa83ZDk6" class="cta-button">
-        <i class="fab fa-telegram"></i> Залишилось <span id="spots-btn">97</span> місць
-      </a>
+  <main>
+    <h1>УСИК – ВЕРХОВЕН</h1>
+    <div class="status">
+      <i class="fas fa-circle" style="color:#2ecc2e; font-size: 0.7rem;"></i> Зараз онлайн
+    </div>
+    <p class="desc">
+      <i class="fas fa-ticket-alt"></i> Безкоштовний набір на трансляцію! <br> 
+      Приймаю лише перших 100 людей по посиланню!
+    </p>
 
-      <div class="countdown">
-        НА САЙТІ 414 ЛЮДИНИ. ЗАВЕРШАЄТЬСЯ ЧЕРЕЗ   <br>
-        <div id="timer" class="timer">
-  <span class="time-box">0</span>
-  <span class="time-box">0</span>
-  <span class="time-sep">:</span>
-  <span class="time-box">0</span>
-  <span class="time-box">8</span>
-  <span class="time-sep">:</span>
-  <span class="time-box">1</span>
-  <span class="time-box">8</span>
-</div>
+    <a href="https://t.me/+MKhgI6IVr083NGIy" class="cta-button" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-telegram"></i> Залишилось <span id="spots-btn">97</span> місць
+    </a>
+
+    <div class="countdown">
+      🔥 НА САЙТІ 414 ЛЮДИНИ. ЗАВЕРШАЄТЬСЯ ЧЕРЕЗ <br>
+      <div id="timer" class="timer">
+        <span class="time-box">0</span>
+        <span class="time-box">0</span>
+        <span class="time-sep">:</span>
+        <span class="time-box">0</span>
+        <span class="time-box">8</span>
+        <span class="time-sep">:</span>
+        <span class="time-box">1</span>
+        <span class="time-box">8</span>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <footer>
-      <p>© 2025 GetAllMyLinks. Усі права захищені.</p>
-      <p><a href="#">Політика конфіденційності</a></p>
-    </footer>
-  </div>
+  <footer>
+    <p>© 2025 GetAllMyLinks. Усі права захищені.</p>
+    <p><a href="#">Політика конфіденційності</a></p>
+  </footer>
+</div>
 
-  <script src="main.js"></script>
+<script>
+  (function() {
+    // ------------------------------ УСИК - ВЕРХОВЕН ---------------------------------
+    // Унікальні ключі для localStorage, щоб не перетиналися з оригіналом "Усик-Дюбуа"
+    const STORAGE_END_KEY = "usykVerkhovenEndTime";
+    const STORAGE_SPOTS_KEY = "usykVerkhovenSpots";
+    
+    // ----- Ініціалізація таймера (10 хвилин) -----
+    let endTime = localStorage.getItem(STORAGE_END_KEY);
+    const nowTime = new Date().getTime();
+    
+    if (!endTime) {
+      // Запускаємо таймер на 10 хвилин з моменту першого завантаження
+      endTime = nowTime + 10 * 60 * 1000; // 10 хвилин
+      localStorage.setItem(STORAGE_END_KEY, endTime);
+    } else {
+      endTime = parseInt(endTime, 10);
+      // Якщо з якоїсь причини час у минулому — перезапустимо (але залишаємо як є, відображатиме 0)
+    }
+    
+    let timerInterval = null;
+    
+    function updateTimerUI() {
+      const now = new Date().getTime();
+      let distance = endTime - now;
+      const digits = document.querySelectorAll("#timer .time-box");
+      if (!digits.length) return;
+      
+      if (distance <= 0) {
+        // Таймер завершено - всі нулі
+        if (timerInterval) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+        }
+        digits.forEach((digit, idx) => {
+          // Перші два "00" (години), потім хвилини та секунди
+          if (idx === 0 || idx === 1) digit.textContent = "0";
+          else if (idx === 2 || idx === 3) digit.textContent = "0";
+          else if (idx === 4 || idx === 5) digit.textContent = "0";
+        });
+        return;
+      }
+      
+      const totalMinutes = Math.floor(distance / (1000 * 60));
+      const minutes = totalMinutes % 60;
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      const minStr = String(minutes).padStart(2, "0");
+      const secStr = String(seconds).padStart(2, "0");
+      
+      // Формат: [0][0] : [min_tens][min_ones] : [sec_tens][sec_ones]
+      if (digits.length >= 6) {
+        digits[0].textContent = "0";
+        digits[1].textContent = "0";
+        digits[2].textContent = minStr[0];
+        digits[3].textContent = minStr[1];
+        digits[4].textContent = secStr[0];
+        digits[5].textContent = secStr[1];
+      }
+    }
+    
+    updateTimerUI();
+    if (endTime > new Date().getTime()) {
+      timerInterval = setInterval(updateTimerUI, 1000);
+    }
+    
+    // ----- Лічильник місць (зменшення кожні 5 секунд) -----
+    let currentSpots = localStorage.getItem(STORAGE_SPOTS_KEY);
+    if (currentSpots === null) {
+      currentSpots = 97;
+      localStorage.setItem(STORAGE_SPOTS_KEY, currentSpots);
+    } else {
+      currentSpots = parseInt(currentSpots, 10);
+      if (isNaN(currentSpots)) currentSpots = 97;
+    }
+    
+    const spotsSpan = document.getElementById("spots-btn");
+    if (spotsSpan) spotsSpan.textContent = currentSpots;
+    
+    // Інтервал зменшення місць (копіюємо логіку оригіналу: тільки якщо >3)
+    let spotsInterval = setInterval(() => {
+      let storedSpots = localStorage.getItem(STORAGE_SPOTS_KEY);
+      let spotsValue = storedSpots !== null ? parseInt(storedSpots, 10) : currentSpots;
+      if (isNaN(spotsValue)) spotsValue = 97;
+      
+      if (spotsValue > 3) {
+        spotsValue--;
+        localStorage.setItem(STORAGE_SPOTS_KEY, spotsValue);
+        if (spotsSpan) spotsSpan.textContent = spotsValue;
+        currentSpots = spotsValue;
+      } else {
+        // Досягли ліміту – більше не зменшуємо, але інтервал можна залишити, перевірка не дасть спаду
+        if (spotsValue <= 0) {
+          // Якщо раптом стало 0 або менше, фіксуємо 0
+          if (spotsSpan) spotsSpan.textContent = "0";
+        } else {
+          if (spotsSpan) spotsSpan.textContent = spotsValue;
+        }
+      }
+    }, 5000);
+    
+    // Додатково синхронізуємо при перезавантаженні сторінки (якщо localStorage оновлено іншим табом, але то не критично)
+    window.addEventListener('storage', function(e) {
+      if (e.key === STORAGE_SPOTS_KEY) {
+        let newVal = e.newValue ? parseInt(e.newValue, 10) : currentSpots;
+        if (!isNaN(newVal) && spotsSpan) spotsSpan.textContent = newVal;
+        currentSpots = newVal;
+      }
+      if (e.key === STORAGE_END_KEY && e.newValue) {
+        endTime = parseInt(e.newValue, 10);
+        if (timerInterval) clearInterval(timerInterval);
+        updateTimerUI();
+        if (endTime > new Date().getTime()) {
+          timerInterval = setInterval(updateTimerUI, 1000);
+        }
+      }
+    });
+    
+    // Анімація появи (main visible)
+    const mainBlock = document.querySelector("main");
+    if (mainBlock) {
+      // Невелика затримка для плавності
+      setTimeout(() => {
+        mainBlock.classList.add("visible");
+      }, 100);
+    } else {
+      document.addEventListener("DOMContentLoaded", () => {
+        const mainElem = document.querySelector("main");
+        if (mainElem) mainElem.classList.add("visible");
+      });
+    }
+    
+    // Додаткова ініціалізація після повного завантаження DOM
+    document.addEventListener("DOMContentLoaded", function() {
+      const mainOnLoad = document.querySelector("main");
+      if (mainOnLoad && !mainOnLoad.classList.contains("visible")) {
+        mainOnLoad.classList.add("visible");
+      }
+      // перевірка лічильника на всяк випадок
+      const storedSpotsFinal = localStorage.getItem(STORAGE_SPOTS_KEY);
+      if (storedSpotsFinal !== null) {
+        let finalSpots = parseInt(storedSpotsFinal, 10);
+        if (!isNaN(finalSpots) && spotsSpan) spotsSpan.textContent = finalSpots;
+        currentSpots = finalSpots;
+      } else {
+        if (spotsSpan && spotsSpan.textContent === "97") {
+          localStorage.setItem(STORAGE_SPOTS_KEY, 97);
+        }
+      }
+      
+      // Оновлюємо таймер
+      if (endTime && endTime > new Date().getTime()) {
+        if (timerInterval) clearInterval(timerInterval);
+        updateTimerUI();
+        timerInterval = setInterval(updateTimerUI, 1000);
+      } else if (endTime && endTime <= new Date().getTime()) {
+        updateTimerUI();
+      }
+    });
+    
+    // Cleanup у разі (не обов'язково, але елегантно), при виході сторінки інтервали очистяться самі,
+    // але запобігаємо дублюванню, якщо раптом script двічі.
+    window.addEventListener("beforeunload", function() {
+      if (timerInterval) clearInterval(timerInterval);
+      if (spotsInterval) clearInterval(spotsInterval);
+    });
+  })();
+</script>
 </body>
 </html>
